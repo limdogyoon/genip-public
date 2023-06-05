@@ -1,0 +1,35 @@
+{% extends "memberapp/base.html" %}
+{% block content %}
+<div class="container_signup">
+    <form method="post" action="{% url 'memberapp:signup' %}">
+        {% csrf_token %}
+        {% include "memberapp/form_errors.html" %}
+        <div class="mb-3">
+            <div class="col-25"><label for="username" class="labelling">사용자 이름</label></div>
+            <div class="col-75"><input type="text" class="form-control" name="username" id="username"
+                   value="{{ form.username.value|default_if_none:'' }}"></div>
+        </div>
+        <div class="mb-3">
+            <div class="col-25"><label for="password1" class="labelling">비밀번호</label></div>
+            <div class="col-75"><input type="password" class="form-control" name="password1" id="password1"
+                   value="{{ form.password1.value|default_if_none:'' }}"></div>
+        </div>
+        <div class="mb-3">
+            <div class="col-25"><label for="password2" class="labelling">비밀번호 확인</label></div>
+            <div class="col-75"><input type="password" class="form-control" name="password2" id="password2"
+                   value="{{ form.password2.value|default_if_none:'' }}"></div>
+        </div>
+        <div class="mb-3">
+            <div class="col-25"><label for="email" class="labelling">이메일</label></div>
+            <div class="col-75"><input type="text" class="form-control" name="email" id="email"
+                   value="{{ form.email.value|default_if_none:'' }}"></div>
+        </div>
+        <div class="mb-3" style="display: none">
+            <div class="col-25"><label for="email" class="labelling">횟수</label></div>
+            <div class="col-75"><input type="text" class="form-control" name="used" id="used"
+                   value="0"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">생성하기</button>
+    </form>
+</div>
+{% endblock %}

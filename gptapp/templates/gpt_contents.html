@@ -1,0 +1,202 @@
+<html>
+<head>
+<title>GenIP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Serif+KR&display=swap" rel="stylesheet">
+<style>
+.inout {
+  margin: auto;
+  width: 49.8%;
+  border: 0px solid green;
+  padding: 0px;
+  display: block;
+}
+body {
+  font-family: 'Nanum Gothic', sans-serif;
+  background-color: #F5FAFE;
+}
+h1 {
+  font-size: 2.5em;
+}
+a:link {
+  color: 0;
+  text-decoration: none;
+}
+a:visited {
+  color: 0;
+  text-decoration: none;
+}
+a:hover {
+  color: #999999;
+  text-decoration: underline;
+}
+a:active {
+  color: #999999;
+  text-decoration: underline;
+}
+fieldset {
+  border-width: 0;
+}
+textarea {
+  width: 100%;
+  height: 400px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  font-size:20px;
+  resize: none;
+  font-family: 'Noto Serif KR', serif;
+  border-radius: 30px;
+}
+.welcome-msg{
+  font-size: 30px;
+  font-weight: bold;
+  float: left;
+  display: none;
+}
+input[type=submit]{
+/*  background-color: #0000006b;*/
+  background: linear-gradient(to top right, #dd3a58, #8493f1);
+  border: none;
+  color: white;
+  padding: 6px 16px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  /*width: 100px;*/
+  width: 49%;
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  height: 40px;
+  border-radius: 15px;
+}
+input[type=submit]:hover{
+  color: #5b5b5b;
+}
+p {
+  color: white;
+}
+.editor-top-bar{
+  height: 48px;
+  text-align: right;
+}
+.selectbox{
+    width: 49%;
+    padding: 8px 8px;
+    border: none;
+    border-radius: 0;
+    background-color: #d9d9d9;
+    cursor: pointer;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 15px;
+}
+#reset{
+    background-color: #0000006b; 
+    border: none;
+    color: white;
+    padding: 6px 16px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 80px;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    height: 40px;
+    border-radius: 15px;
+}
+#reset:hover {
+    color: black;
+}
+#question{
+  background-color: #ffffff;
+}
+</style>
+<script>
+function myCopy() {
+  // Get the text field
+  var copyText = document.getElementById("answer");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+  
+  // Alert the copied text
+  alert("Copied the text: " + copyText.value);
+}
+
+function myReset() {
+  document.getElementById("question").value="{{ question }}";
+  document.getElementById("answer").value="{{ answer }}";
+}
+
+function isKeyPressed(event) {
+  if (event.ctrlKey && event.key === 'Enter') {
+    document.getElementById("myForm").submit();
+  } 
+  if (event.key === 'Escape') {
+    myReset();
+  }
+}
+</script>
+</head>
+
+<body>
+<h1 align="center"><br><a href="/mygpt" title="logo">GenIP</a></h1>
+
+<form action="" method="post" style="text-align: center;" id="myForm">
+{% csrf_token %}
+<fieldset>
+    <input type="hidden" name="time_saved" id="time_saved" value="{% now "U"  %}">
+<!--    <legend><h1>Generating Intellectual Property</h1></legend>-->
+        {% if error_message %} {{ error_message }} {% endif %}
+    <div class="inout" style="float: left;">
+      <div class="editor-top-bar">
+        <span class="welcome-msg"> Enter your idea </span>
+        <label for="languages"> </label>
+        <select name="languages" id="languages" class="selectbox">
+            <option value="ko"{% if ko %} selected{% endif %}>한국어</option>
+            <option value="en"{% if en %} selected{% endif %}>English</option>
+            <option value="zh"{% if zh %} selected{% endif %}>中文</option>
+            <option value="ja"{% if ja %} selected{% endif %}>日本語</option>
+            <option value="de"{% if de %} selected{% endif %}>Deutsch</option>
+            <option value="ar"{% if ar %} selected{% endif %}>العربية</option>
+        </select>
+        <input type="submit" value="Run" title="Ctrl+Enter">
+      </div>
+      <div>
+        <textarea name="question" id="question" placeholder="{{ q_default }}" onkeydown="isKeyPressed(event)">{{ question }}</textarea>
+      </div>
+    </div>
+    <div class="inout" style="float: right;">
+      <div class="editor-top-bar">
+        <button onclick="myReset()" name="reset" id="reset" type="button" title="Esc">RESET</button>
+      </div>
+      <div>
+        <textarea name="answer" id="answer" placeholder="{{ a_default }}">{{ answer }}</textarea>
+      </div>
+    </div>
+</fieldset>
+</form>
+
+
+<p>for debugging purpose below {% now "Y-m-d G:i:s" %}</p>
+<!--        <p>first? <b>{{ is_first }}</b> {{ printtt }} </p> -->
+<div style="width: 400px;">
+<p>{% if latest_Dbgenip_list %} {{ latest_Dbgenip_list }} {% endif %}</p>
+       <p>{% if printtt %} {{ printtt }} {% endif %}</p> 
+</div>
+<p id="demo">{{ time_elapsed }}</p>
+<!--        <p><button onclick="myCopy()" name="copier" id="copier">blah~</button></p> -->
+
+</body>
+</html>

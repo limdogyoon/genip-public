@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GenIP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Serif+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'gptapp/style.css' %}">
+    <!--<script src="{% static 'gptapp/dg.js' %}"></script>-->
+    <link rel="shortcut icon" href="{% static 'gptapp/images/favicon.ico' %}">
+    <script>
+        //로딩창 사이즈 계산
+        document.getElementById('popup').style.width = (screen.width-200).toString()+"px";
+        document.getElementById("popup").style.height = screen.height.toString() + "px";
+
+        //엔터 눌렀을 경우
+        function myEnterPress(event) {
+          if (event.key === 'Enter') {
+            FormSubmit()
+          }
+        }
+
+        //제출하면 로딩 표시
+        function FormSubmit(){
+            document.getElementById('popup').style.display = "block";
+            document.getElementsByTagName("body")[0].style.cursor = "wait";
+            document.getElementById('myForm').submit()
+        }
+
+        //로딩 취소
+        function myStop(){
+            window.stop();
+            document.getElementsByTagName("body")[0].style.cursor = "";
+            document.getElementById('popup').style.display = "none";
+        }
+
+
+        //파라미터(템퍼러쳐) 바꾸기(히든 + 디브)
+        function changeParam(string) {
+          document.getElementById("param_selected").innerHTML = string;
+          document.getElementById("param").value = string;
+        }
+
+/*
+document.getElementById("question").focus();
+*/
+
+/*
+function myTabPress(event) {
+  if (event.key === 'Tab') {
+    document.getElementById("question").focus();
+  }
+}*/
+
+        //화면 지우기
+        function myReset() {
+          document.getElementById("question").value=`{{ question }}`;
+          document.getElementById("left").value=`{{ left }}`;
+          document.getElementById("right").value=`{{ right }}`;
+        }
+
+        //복사기 -> https 환경에서만 작동
+        function myCopy(string) {
+          var copyText = document.getElementById(string);
+          copyText.select();
+          copyText.setSelectionRange(0, 99999); // For mobile devices
+          navigator.clipboard.writeText(copyText.value);
+          toast("The text copied : \n" + copyText.value);
+        }
+
+function isKeyPressed(event) {
+  if (event.ctrlKey && event.key === 'Enter') {
+    FormSubmit()
+    /*document.getElementById("myForm").submit();
+    document.getElementsByTagName("html")[0].style.cursor = "wait";*/
+  }
+  if (event.key === 'Escape') {
+    myReset();
+  }
+/*  if (event.key === 'Tab') {
+    document.getElementById("answer").focus();
+  }*/
+}
+
+//토스트
+let removeToast;
+
+function toast(string) {
+    const toast = document.getElementById("toast");
+
+    toast.classList.contains("reveal") ?
+        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+            document.getElementById("toast").classList.remove("reveal")
+        }, 3000)) :
+        removeToast = setTimeout(function () {
+            document.getElementById("toast").classList.remove("reveal")
+        }, 1000)
+    toast.classList.add("reveal"),
+        toast.innerText = string
+}
+
+function showSub(menu_name) {
+  var x = document.getElementById(menu_name);
+  if (x.style.visibility === 'hidden') {
+    x.style.visibility = 'visible';
+    document.getElementById('menu_sub2_2').style.visibility = 'visible';
+    document.getElementById('menu_sub2_3').style.visibility = 'visible';
+  } else {
+    x.style.visibility = 'hidden';
+    document.getElementById('menu_sub2_2').style.visibility = 'hidden';
+    document.getElementById('menu_sub2_3').style.visibility = 'hidden';
+  }
+}
+
+function changeColor() {
+  var x = document.getElementById("menutext")
+  x.fill = 'black';
+}//defunct
+
+// Make the DIV element draggable:
+dragElement(document.getElementById("menu"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "_inside")) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id + "_inside").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+//draggable ends
+
+//tab change
+function openContent(evt, conName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById("answer").value = document.getElementById(conName).value;
+  evt.currentTarget.className += " active";
+}
+    </script>
+</head>
+
+<body>
+<h1 align="center"><br><a href="" title="logo" tabindex="-1">GenIP</a></h1>
+{% if user.is_authenticated %} <!--로그인 성공-->
+<p align="right"><a href="{% url 'memberapp:logout' %}">{{ user.username }} (로그아웃)</a></p>
+
+  {% if perms.gptapp.view_genip_db %}
+    {% include "gptapp/gpt.html" %}
+  {% elif freecount > 0 %}
+    <p align="right" style="color: black;">무료 {{ freecount }}회</p>
+    {% include "gptapp/gpt.html" %}
+  {% else %}
+    <h1 align="center">무료 횟수를 모두 사용하셨습니다.<br>유료회원 가입 후 더 사용할 수 있습니다.</h1>
+  {% endif %}
+
+  {% if user %}
+      <p>  {{ useruser }} </p>
+  {% else %}
+      <p> not user </p>
+  {% endif %}
+
+
+{% else %} <!--로그인 실패-->
+{% include "memberapp/login.html" %}
+{% endif %}
+
+
+<footer align="center">Copyright ⓒ 2023 GenIP. All Rights Reserved.<br> 홍보 및 대외협력 pr@gen-ip.com <br> 사업자 등록번호 : 410-35-01299</footer>
+</body>
+</html>
