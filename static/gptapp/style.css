@@ -1,0 +1,428 @@
+/* For mobile first */
+
+body {
+  font-family: 'Nanum Gothic', sans-serif;
+  background-color: #F5FAFE;
+}
+h1 {
+  font-size: 2.5em;
+}
+a:link {
+  color: #999999;
+  text-decoration: none;
+}
+a:visited {
+  color: #999999;
+  text-decoration: none;
+}
+a:hover {
+  color: #999999;
+  text-decoration: underline;
+}
+a:active {
+  color: #999999;
+  text-decoration: underline;
+}
+fieldset {
+  border-width: 0;
+}
+.up_output{
+  order: 2;
+}
+.down_input{
+  order: 1;
+}
+.up_output::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.output {
+  margin: auto;
+  width: 100%;
+  border: 0px solid green;
+  padding: 0px;
+  display: block;
+}
+.left {
+ /* float: left;*/
+}
+.right {
+ /* float: right;*/
+}
+textarea {
+  width: 100%;
+  height: 400px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  font-size:20px;
+  resize: none;
+  font-family: 'Noto Serif KR', serif;
+  border-radius: 30px;
+}
+.down_input{
+  margin: 8px;
+  text-align: center;
+}
+.welcome-msg{
+  font-size: 30px;
+  font-weight: bold;
+  float: left;
+  display: none;
+}
+input[type=submit]{
+/*  background-color: #0000006b;*/
+  background: linear-gradient(to top right, #dd3a58, #8493f1);
+  border: none;
+  color: white;
+  padding: 6px 16px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  /*width: 100px;*/
+  width: 40%;
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  height: 40px;
+  border-radius: 15px;
+}
+input[type=submit]:hover{
+  color: #5b5b5b;
+}
+p {
+  color: white;
+}
+.editor-top-bar{
+  height: 48px;
+  display: none;
+}
+.selectbox{
+    display: none;
+    width: 50%;
+    padding: 8px 8px;
+    border: none;
+    border-radius: 0;
+    background-color: #d9d9d9;
+    cursor: pointer;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 15px;
+    float: left;
+}
+#reset{
+    background-color: #0000006b; 
+    border: none;
+    color: white;
+    padding: 6px 16px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 80px;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    height: 40px;
+    border-radius: 15px;
+    float: right;
+}
+#reset:hover {
+    color: black;
+}
+.question{
+  height: 150px;
+}
+.toastboard {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    padding: 15px 20px;
+    transform: translate(-50%, 10px);
+    border-radius: 30px;
+    overflow: hidden;
+    font-size: .8rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s, visibility .5s, transform .5s;
+    background: rgba(0, 0, 0, .35);
+    color: #fff;
+    z-index: 10000;
+    max-height: 400px;
+    text-align: left;
+}
+
+.toastboard.reveal {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0)
+}
+#copier{
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  /*display: contents;*/
+  display: none;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin: 4px;
+  border-radius: 10px;
+  border: #d5b3b3 solid 1px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+}
+
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.copyButton{
+  border: 0;
+  cursor: pointer;
+  z-index: 30;
+  background: #dfd0d0;
+  border-radius: 10px;
+}
+.menu {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 0;
+  width: 100px;
+  height: 100px;
+  z-index: 9;
+  /*display: none;*/
+  /*cursor: move;*/
+}
+.menu_inside{
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+.menu_inside:hover {
+  cursor: pointer;
+}
+.menu_sub1{
+  /*display: none;*/
+  position: absolute;
+  bottom: 100px;
+  right: 0px;
+  z-index: 10;
+}
+.menu_sub1:hover{
+  cursor: pointer;
+}
+.menu_sub2{
+  position: absolute;
+  visibility: visible;
+  cursor: pointer;
+}
+
+#menu_sub2_1{
+  bottom: 60px;
+  right:80px;
+}
+#menu_sub2_2{
+  bottom: 155px;
+  right:82px;
+}
+#menu_sub2_3{
+  bottom: 195px;
+  right:0px;
+}
+.form-control{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+.form-control:focus {
+  border: 3px solid #555;
+}
+.labelling{
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+.up_and_down{
+  display:grid;
+  flex-wrap: wrap;
+}
+.loginContainer::after {
+  clear: both;
+}
+footer {
+  clear: both;
+}
+
+#popup{
+  position: fixed;
+  display: none;
+  z-index: 5000;
+  padding: 0px;
+  margin: 0px;
+  /*border: 1px solid black;*/
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  margin-left: -150px;
+  height: 300px;
+  margin-top: -150px;
+  text-align: -webkit-center;
+  background-color: #eeeeee;
+
+}
+#popup_inside{
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+}
+#popup_inside:hover{
+  text-decoration: underline;
+}
+
+/* 로딩바 */
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* 로딩바 끝*/
+
+
+ul{
+  list-style-type: none;
+}
+
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+
+  .up_and_down{
+    display:block;
+  }
+  .output {
+    width: 49.8%;
+  }
+  .left {
+    float: left;
+  }
+  .right {
+    float: right;
+  }
+  .editor-top-bar{
+  display: block
+  }
+  .menu {
+    width: 300px;
+    height: 300px;
+  }
+}
+/*login page*/
+.loginContainer{
+  display: block;
+}
+
+
+/*signup page*/
+.container_signup{
+  border-radius: 5px;
+  /*background-color: #f2f2f2;*/
+  padding: 20px;
+ }
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.btn-primary {
+  background-color: #8a9f97;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+}
+.btn-primary:hover{
+  color: #000000;
+}
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
